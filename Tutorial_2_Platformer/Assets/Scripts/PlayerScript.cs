@@ -9,15 +9,55 @@ public class PlayerScript : MonoBehaviour
 
     public float speed;
 
-    public Text score;
+    public Text scoreText;
+
+    public Text winText;
+
+    public Text livesText;
+
+    private int lives;
 
     private int scoreValue = 0;
+
+
+    public AudioClip musicClipOne;
+
+    public AudioClip musicClipTwo;
+
+    public AudioSource musicSource;
+
+    Animator anim;
+
+
+    private bool facingRight = true;
+
+
+    private bool isOnGround;
+    public Transform groundcheck;
+    public float checkRadius;
+    public LayerMask allGround;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
+        
+        anim = GetComponent<Animator>();
+
         rd2d = GetComponent<Rigidbody2D>();
-        score.text = scoreValue.ToString();
+        SetScoreValue();
+        lives = 3;
+        SetLivesText();
+        winText.text = "";
+
+        {
+            musicSource.clip = musicClipOne;
+            musicSource.Play();
+            musicSource.loop = true;
+
+        }
+
     }
 
     // Update is called once per frame
@@ -26,6 +66,31 @@ public class PlayerScript : MonoBehaviour
         float hozMovement = Input.GetAxis("Horizontal");
         float vertMovement = Input.GetAxis("Vertical");
         rd2d.AddForce(new Vector2(hozMovement * speed, vertMovement * speed));
+
+
+        isOnGround = Physics2D.OverlapCircle(groundcheck.position, checkRadius, allGround);
+
+
+        if (facingRight == false && hozMovement > 0)
+        {
+            Flip();
+        }
+        else if (facingRight == true && hozMovement < 0)
+        {
+            Flip();
+        }
+
+
+        if (hozMovement != 0)
+        {
+            anim.SetInteger("State", 1);
+        }
+
+        if (hozMovement == 0)
+        {
+            anim.SetInteger("State", 0);
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -33,15 +98,36 @@ public class PlayerScript : MonoBehaviour
         if (collision.collider.tag == "Coin")
         {
             scoreValue += 1;
-            score.text = scoreValue.ToString();
+            SetScoreValue();
+            Destroy(collision.collider.gameObject);
+
+            if (scoreValue == 4)
+            {
+                lives = 3;
+                SetLivesText();
+                transform.position = new Vector3(84.0f, -1.8f, 0.0f);
+   
+            }
+
+        }
+
+        else if (collision.collider.tag == "Enemy")
+        {
+            lives -= 1;
+            SetLivesText();
             Destroy(collision.collider.gameObject);
         }
 
+
+
+
     }
+
+
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Ground")
+        if (collision.collider.tag == "Ground" && isOnGround)
         {
             if (Input.GetKey(KeyCode.W))
             {
@@ -49,8 +135,103 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-    void Update()
+
+
+
+
+   
+
+    void SetScoreValue()
     {
+        scoreText.text = "Score: " + scoreValue.ToString();
+        if (scoreValue >= 8)
+        {
+            winText.text = "You Win! Game created by: Kirsten Futch";
+            musicSource.clip = musicClipTwo;
+            musicSource.Play();
+            musicSource.loop = false;
+        }
+
+    }
+
+    void SetLivesText()
+    {
+        livesText.text = "Lives: " + lives.ToString();
+        if (lives <= 0)
+        {
+            winText.text = "You Lose! Game created by: Kirsten Futch";
+            Destroy(gameObject);
+        }
+    }
+
+
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector2 Scaler = transform.localScale;
+        Scaler.x = Scaler.x * -1;
+        transform.localScale = Scaler;
+    }
+
+
+
+
+    void Update()
+
+    {
+        if (isOnGround == true)
+
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+
+            {
+
+                anim.SetInteger("State", 1);
+
+            }
+
+            if (Input.GetKeyUp(KeyCode.D))
+
+            {
+
+                anim.SetInteger("State", 0);
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.A))
+
+            {
+
+                anim.SetInteger("State", 1);
+
+            }
+
+            if (Input.GetKeyUp(KeyCode.A))
+
+            {
+
+                anim.SetInteger("State", 0);
+
+            }
+
+
+
+            if (Input.GetKeyDown(KeyCode.W))
+
+            {
+
+                anim.SetInteger("State", 2);
+
+            }
+
+
+            if (isOnGround == false)
+            {
+                anim.SetInteger("State", 2);
+            }
+
+        }
+
         if (Input.GetKey("escape"))
         {
             Application.Quit();
