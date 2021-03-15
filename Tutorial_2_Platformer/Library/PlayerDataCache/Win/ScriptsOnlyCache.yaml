@@ -18,10 +18,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -81,15 +79,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12046}
     - Class: 114
-      Script: {instanceID: 12806}
+      Script: {instanceID: 12694}
     - Class: 114
-      Script: {instanceID: 13948}
+      Script: {instanceID: 12808}
     - Class: 114
-      Script: {instanceID: 14396}
+      Script: {instanceID: 13950}
     - Class: 114
-      Script: {instanceID: 15030}
+      Script: {instanceID: 14398}
     - Class: 114
-      Script: {instanceID: 19854}
+      Script: {instanceID: 15032}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -321,6 +319,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Shadow
+  - hash:
+      serializedVersion: 2
+      Hash: e08dc097b830ae769e9cdd9b04e903ac
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnemyMover
   - hash:
       serializedVersion: 2
       Hash: cc4274b586df3c02688bac01b88bd16c
@@ -615,13 +619,7 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: e08dc097b830ae769e9cdd9b04e903ac
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: EnemyMover
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: D:/Spring 2021 UCF/DIG3480/Tutorial_2_Platformer.exe
+  playerPath: D:/Spring 2021 UCF/DIG3480/Futch_Kirsten_DIG3480_Challenge2(1)/Tutorial_2_Platformer.exe
